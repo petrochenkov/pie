@@ -13,12 +13,13 @@ flags["shared-pie"]="-shared -fPIE -pie"
 flags["shared-static"]="-shared -static"
 flags["static-pie"]="-fPIE -static-pie"
 flags["static-pie-emu"]="-fPIE -static -Wl,-pie,--no-dynamic-linker,-z,text"
+flags["static-pie-emu2"]="-fPIE -static -Wl,-pie"
 
 aclang=/e/Distribs/android-ndk-r21/toolchains/llvm/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang
 agcc=/e/Distribs/android-ndk-r17c-aarch64-21/bin/aarch64-linux-android-gcc.exe
 areadelf=/e/Distribs/android-ndk-r21/toolchains/llvm/prebuilt/windows-x86_64/bin/aarch64-linux-android-readelf.exe
 
-for elf in default no-pie pie static shared shared-no-pie shared-pie shared-static; do
+for elf in default no-pie pie static shared shared-no-pie shared-pie shared-static static-pie-emu2; do
     # clang
     $aclang main.c -fuse-ld=lld -o $elf ${flags[$elf]} -v 2>$elf.out
     file $elf >$elf.file
