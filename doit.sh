@@ -31,7 +31,8 @@ areadelf=/e/Distribs/android-ndk-r21/toolchains/llvm/prebuilt/windows-x86_64/bin
 dumpbin="/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/dumpbin.exe"
 
 if [ $mingw = 1 ]; then
-    for elf in default no-pie pie static shared shared-no-pie shared-pie shared-static static-pie; do
+    # for elf in default no-pie pie static shared shared-no-pie shared-pie shared-static static-pie; do
+    for elf in no-pie pie static shared shared-static static-pie; do
         # clang
         clang main.c -fuse-ld=lld -o $elf ${flags[$elf]} -v 2>$elf.out
         file $elf.exe >$elf.file
@@ -45,7 +46,8 @@ if [ $mingw = 1 ]; then
     exit 0
 fi
 
-for elf in default no-pie pie static shared shared-no-pie shared-pie shared-static static-pie-emu2; do
+# for elf in default no-pie pie static shared shared-no-pie shared-pie shared-static static-pie-emu2; do
+for elf in no-pie pie static shared shared-static; do
     # clang
     $aclang main.c -fuse-ld=lld -o $elf ${flags[$elf]} -v 2>$elf.out
     file $elf >$elf.file
@@ -63,9 +65,9 @@ for elf in static-pie; do
     $areadelf -a $elf > $elf.readelf
 done
 
-for elf in static-pie-emu; do
-    # clang
-    $aclang main.c -fuse-ld=lld -o $elf ${flags[$elf]} -v 2>$elf.out
-    file $elf >$elf.file
-    $areadelf -a $elf > $elf.readelf
-done
+# for elf in static-pie-emu; do
+#     # clang
+#     $aclang main.c -fuse-ld=lld -o $elf ${flags[$elf]} -v 2>$elf.out
+#     file $elf >$elf.file
+#     $areadelf -a $elf > $elf.readelf
+# done
